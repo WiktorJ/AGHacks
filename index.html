@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <title>Hackatoveen</title>
     <link rel="stylesheet" href="css/styles.css"/>
-</head>
-<body>
+    <script src="bower_components/angular/angular.min.js"></script>
 
-<h1>Hackatoven</h1>
+
+    <script>
+        angular.module('app', []);
+    </script>
+</head>
+<body ng-app="app">
+
+<h1>Hackatoven {{1+2}}</h1>
 
 <ul id="menu">
     <li class="lines"></li>
