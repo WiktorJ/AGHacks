@@ -6,55 +6,46 @@
 
 html, body {
   min-height: 100%;
+  height: 100%;
   font: 20px/1.5 monospace;
 }
 
-#menu {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 150px;
-  margin-top: -75px;
-  list-style: none;
+body {
+  height: 100%;
+  min-height: 100%;
 }
 
-#menu li.lines {
-  height: 2px;
-  background: #000;
-  display: block;
-  width: 100%;
-  margin-bottom: 25px;
+#container {
+  height: 90%;
+  width: 90%;
+  position: absolute;
+  top: 5%;
+  left: 5%;
 }
 
 h1 {
   text-align: center;
-  margin: 150px 0;
+  margin-bottom: 100px;
 }
 
-#menu li.notes {
-  position: absolute;
-  width: 30px;
-  height: 25px;
-  background: red;
-  border-radius: 50%;
+.tab {
+  background: #fff;
+  border: 1px solid #ccc;
+
+  width: 45%;
+  float: left;
+  font-size: 1.5em;
+  height: 200px;
+  margin: 0 2% 2% 2%;
+  text-align: center;
+  line-height: 200px;
+  cursor: pointer;
+  transition: all .4s;
 }
 
-#menu li.n1 {
-  top: 20px;
-  left: 120px;
+.tab:hover {
+  background: #000;
+  border-color: #000;
+  color: #fff;
 }
 
-#menu li.n2 {
-  top: 40px;
-  left: 150px;
-}
-
-#menu li.n1 {
-  top: -20px;
-  left: 180px;
-}
-
-#menu li.n4 {
-  top: 70px;
-  left: 220px;
-}

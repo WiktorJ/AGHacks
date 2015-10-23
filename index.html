@@ -5,28 +5,19 @@
     <title>Hackatoveen</title>
     <link rel="stylesheet" href="css/styles.css"/>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 
-    <script>
-        angular.module('app', []);
-    </script>
+    <script src="app.concatenated.js"></script>
+
 </head>
 <body ng-app="app">
 
-<h1>Hackatoven {{1+2}}</h1>
 
-<ul id="menu">
-    <li class="lines"></li>
-    <li class="lines"></li>
-    <li class="lines"></li>
-    <li class="lines"></li>
-    <li class="lines"></li>
-    <li class="notes n1"></li>
-    <li class="notes n2"></li>
-    <li class="notes n3"></li>
-    <li class="notes n4"></li>
-    <li class="notes n5"></li>
-</ul>
+<div id="container">
+    <h1>Hackatoven {{1+2}}</h1>
+    <ui-view></ui-view>
+</div>
 
 </body>
 </html>
