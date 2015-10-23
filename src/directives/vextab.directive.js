@@ -5,8 +5,8 @@ app.directive('vextab', function($compile){
     renderer = new Vex.Flow.Renderer( canvas,
         //Vex.Flow.Renderer.Backends.SVG);
         Vex.Flow.Renderer.Backends.CANVAS);
-    artist = new Vex.Flow.Artist(10, 10, 800, {scale: 0.8});
-    vextab = new Vex.Flow.VexTab(artist);
+    artist = new Artist(10, 10, 800, {scale: 0.8});
+    vextab = new VexTab(artist);
     return{
         restrict: 'E',
         link: function(scope, element, attrs){
