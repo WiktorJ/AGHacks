@@ -19,6 +19,4 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         templateUrl: 'src/notation/notation.html',
         controller: 'notationController'
     });
-
-
 });
