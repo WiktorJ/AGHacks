@@ -61,7 +61,10 @@ app.controller('notationController', function ($scope,$timeout) {
     $scope.correctAnswer = 0;
     $scope.check = function(){
         console.log();
-        if(document.getElementById('userInput').value == $scope.generatedNotes){
+        console.log(document.getElementById('userInput').value);
+        console.log($scope.generatedNotes);
+
+        if(document.getElementById('userInput').value == $scope.generatedNotes.trim()){
             $scope.correctAnswer=1;
             $scope.text="Ok";
         }

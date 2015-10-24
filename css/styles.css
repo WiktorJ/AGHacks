@@ -63,12 +63,6 @@ h1 {
   transition: all .4s;
   padding: 20px;
 }
-.redButton{
-  background: red;
-}
-.greenButton{
-  background: green;
-}
 .button:hover {
   background: #000;
   border-color: #000;
@@ -85,4 +79,10 @@ input {
   width: 600px;
   background: #FFFFFF;
 }
+.redButton {
+  background-color: red;
+}
 
+.greenButton {
+  background-color: green;
+}
