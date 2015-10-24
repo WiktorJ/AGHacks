@@ -11,7 +11,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('intervals', {
             url: '/intervals',
-            templateUrl: 'src/intervals/intervals.html'
+            templateUrl: 'src/intervals/intervals.html',
+            controller: 'intervalsController'
         });
 
 
