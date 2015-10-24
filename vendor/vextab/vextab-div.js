@@ -26931,7 +26931,7 @@ Artist = (function() {
     }
     this.rendered = true;
     if (!Artist.NOLOGO) {
-      LOGO = "vexflow.com";
+      LOGO = "";//LOGO = "vexflow.com";
       width = ctx.measureText(LOGO).width;
       ctx.save();
       ctx.setFont("Times", 10, "italic");
