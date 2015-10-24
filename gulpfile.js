@@ -2,6 +2,8 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var connect = require('gulp-connect');
 var concat = require('gulp-concat');
+var watch = require('gulp-watch');
+
 
 gulp.task('less', function(){
     gulp.src('./less/styles.less')
@@ -18,8 +20,15 @@ gulp.task('js', function () {
 });
 
 gulp.task('watch', function(){
-    gulp.watch('./less/**/*.less', ['less']);
-    gulp.watch('./src/**/*.js', ['js']);
+    gulp.src('src/**/*.js')
+        .pipe(watch('src/**/*.js', function() {
+            gulp.start('js');
+        }));
+
+    gulp.src('less/**/*.less')
+        .pipe(watch('less/**/*.less', function() {
+            gulp.start('less');
+        }));
 });
 
 gulp.task('server', function () {

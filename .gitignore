@@ -2,3 +2,4 @@
 node_modules/
 bower_components/
 app.concatenated.js
+.DS_Store

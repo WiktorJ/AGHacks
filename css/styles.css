@@ -42,3 +42,11 @@ h1 {
   border-color: #000;
   color: #fff;
 }
+#rythmicGame {
+  text-align: center;
+}
+canvas {
+  border: 1px solid red;
+  margin: 0 auto;
+  width: 480px;
+}

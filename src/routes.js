@@ -12,6 +12,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('intervals', {
             url: '/intervals',
             templateUrl: 'src/intervals/intervals.html'
+        })
+        .state('rythmics', {
+            url: '/rythmics',
+            templateUrl: 'src/rythmic/rythmic.html'
         });
 
 
