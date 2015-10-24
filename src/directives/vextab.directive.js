@@ -9,11 +9,17 @@ app.directive('vextab', function($compile){
     vextab = new VexTab(artist);
     return{
         restrict: 'E',
+        scope:{
+            'notesString':"@"
+        },
         link: function(scope, element, attrs){
             try {
                 vextab.reset();
                 artist.reset();
-                vextab.parse(element.text());
+
+                //vextab.parse(element.text());
+                //console.log(scope.notesString);
+                vextab.parse(scope.notesString);
                 artist.render(renderer);
             }
             catch (e) {
