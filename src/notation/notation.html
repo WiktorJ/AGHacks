@@ -10,7 +10,7 @@
         <div id="userAnswer">
             <form>
                 Odpowiedź:<br>
-                <input type="text" name="firstname">
+                <input type="text" id="userInput" name="answer">
             </form>
         </div>
         <div id="answers">
@@ -18,9 +18,7 @@
         </div>
     </div>
     <div style="text-align: center; padding: 20px">
-        <div id="button">
-            Sprawdź<br>
-        </div>
+        <div id="button" ng-class="{ 'redButton' : correctAnswer == -1,'greenButton':correctAnswer == 1 }" class="button" ng-click="check()">{{text}}<br></div>
     </div>
 
 </body>

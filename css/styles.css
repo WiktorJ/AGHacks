@@ -50,7 +50,7 @@ h1 {
   padding: 20px;
   text-align: center;
 }
-#button {
+.button {
   background: #fff;
   border: 1px solid #ccc;
   width: 150px;
@@ -63,7 +63,13 @@ h1 {
   transition: all .4s;
   padding: 20px;
 }
-#button:hover {
+.redButton{
+  background: red;
+}
+.greenButton{
+  background: green;
+}
+.button:hover {
   background: #000;
   border-color: #000;
   color: #fff;
@@ -79,3 +85,4 @@ input {
   width: 600px;
   background: #FFFFFF;
 }
+

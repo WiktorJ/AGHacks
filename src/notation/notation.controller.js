@@ -1,5 +1,6 @@
-app.controller('notationController', function ($scope) {
+app.controller('notationController', function ($scope,$timeout) {
 
+    $scope.text="Sprawdź";
     $scope.notesOptions = "options space=20\ntabstave\nnotation=true\ntablature=false\nnotes ";
     $scope.numberOfSegments = 12;
 
@@ -49,6 +50,30 @@ app.controller('notationController', function ($scope) {
         return outputSegment;
     };
 
-    $scope.randomNotes = $scope.notesOptions + $scope.createRandomSymphony($scope.numberOfSegments) + $scope.createAnnotations($scope.numberOfSegments);
-    console.log($scope.randomNotes)
+    $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
+    $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
+    console.log($scope.randomNotes);
+
+
+    //1 -> true
+    //0 -> not known
+    //-1 -> false
+    $scope.correctAnswer = 0;
+    $scope.check = function(){
+        console.log();
+        if(document.getElementById('userInput').value == $scope.generatedNotes){
+            $scope.correctAnswer=1;
+            $scope.text="Ok";
+        }
+        else{
+            $scope.correctAnswer=-1;
+            $scope.text="Błąd";
+        }
+
+        $timeout(function(){
+            $scope.correctAnswer=0;
+            $scope.text="Sprawdź";
+        },3000);
+    }
+
 });
