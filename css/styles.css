@@ -42,3 +42,29 @@ h1 {
   border-color: #000;
   color: #fff;
 }
+#questions {
+  padding: 20px;
+  text-align: center;
+}
+#answers {
+  padding: 20px;
+  text-align: center;
+}
+#button {
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 150px;
+  font-size: 1.5em;
+  height: 50px;
+  display: inline-block;
+  margin: 0 2% 2% 2%;
+  text-align: center;
+  cursor: pointer;
+  transition: all .4s;
+  padding: 20px;
+}
+#button:hover {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
