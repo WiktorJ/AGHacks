@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="css/notation.css"/>
+<body>
+    <div>
+        <div id="questions">
+            <vextab class="vex-tabdiv"
+                    width=680 scale=1.5 editor="true"
+                    editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
+            </vextab>
+        </div>
+        <div id="userAnswer">
+            <form>
+                Odpowiedź:<br>
+                <input type="text" id="userInput" name="answer">
+            </form>
+        </div>
+        <div id="answers">
+            Odpowiedzi<br>
+        </div>
+    </div>
+    <div style="text-align: center; padding: 20px">
+        <div id="button" ng-class="{ 'redButton' : correctAnswer == -1,'greenButton':correctAnswer == 1 }" class="button" ng-click="check()">{{text}}<br></div>
+    </div>
+
+</body>
+
+
