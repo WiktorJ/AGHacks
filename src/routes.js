@@ -14,9 +14,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'src/intervals/intervals.html',
             controller: 'intervalsController'
         })
-    .state('notation',{
-        url: '/notation',
-        templateUrl: 'src/notation/notation.html',
-        controller: 'notationController'
-    });
+        .state('notation',{
+            url: '/notation',
+            templateUrl: 'src/notation/notation.html',
+            controller: 'notationController'
+        });
 });

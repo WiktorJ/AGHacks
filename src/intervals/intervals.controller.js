@@ -93,8 +93,6 @@ app.controller('intervalsController', function ($scope) {
     };
 
     $scope.checkAnswer = function() {
-        console.log(currAns);
-        console.log($scope.intervalQuestion.answer);
         if(currAns == $scope.intervalQuestion.answer) {
             $scope.result = "DOBRZE"
         } else {
@@ -104,7 +102,6 @@ app.controller('intervalsController', function ($scope) {
 
 
     $scope.currentAnswer = function(ans) {
-        //$scope.nextQuestion(ans);
         currAns = ans;
     };
 
