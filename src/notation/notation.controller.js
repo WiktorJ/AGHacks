@@ -38,6 +38,17 @@ app.controller('notationController', function ($scope) {
         return outputSegment;
     };
 
-    $scope.randomNotes = $scope.notesOptions + $scope.createRandomSymphony($scope.numberOfSegments);
+    $scope.createAnnotations = function (nSegments) {
+        var outputSegment = "\ntext ";
+        console.log(nSegments);
+        var j;
+        for (j = 1; j < nSegments; j++) {
+            outputSegment = outputSegment + j + ",";
+        }
+        outputSegment = outputSegment + j;
+        return outputSegment;
+    };
+
+    $scope.randomNotes = $scope.notesOptions + $scope.createRandomSymphony($scope.numberOfSegments) + $scope.createAnnotations($scope.numberOfSegments);
     console.log($scope.randomNotes)
 });
