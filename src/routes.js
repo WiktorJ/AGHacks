@@ -15,7 +15,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('notation',{
             url: '/notation',
-            templateUrl: 'src/notation/notation.html'
+            templateUrl: 'src/notation/notation.html',
+            controller: 'notationController'
         });
 
 
