@@ -1,7 +1,8 @@
 <body>
-    <h2>Interwały</h2>
-    <div>
-        <div>
+<h2>Interwały</h2>
+
+<div>
+    <div ng-if="state==0">
         <form>
             <label>Melodycznie:
                 <input type="checkbox" ng-model="melodicCheckbox" ng-init="melodicCheckbox=false">
@@ -14,90 +15,144 @@
         </form>
         <form>
             <label>Jakie interwały?
-                <br />
+                <br/>
                 <label>pryma
-                    <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true" ng-click="loadIntervals(intervalc.unison, 0)">
+                    <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true"
+                           ng-click="loadIntervals(intervalc.unison, 0)">
                 </label><br/>
                 <label>sekunda mała
-                    <input type="checkbox" ng-model="intervalc.minors" ng-init="intervalc.minors=true" ng-click="loadIntervals(intervalc.minors, 1)">
+                    <input type="checkbox" ng-model="intervalc.minors" ng-init="intervalc.minors=true"
+                           ng-click="loadIntervals(intervalc.minors, 1)">
                 </label><br/>
                 <label>sekunda wielka
-                    <input type="checkbox" ng-model="intervalc.majors" ng-init="intervalc.majors=true" ng-click="loadIntervals(intervalc.majors, 2)">
+                    <input type="checkbox" ng-model="intervalc.majors" ng-init="intervalc.majors=true"
+                           ng-click="loadIntervals(intervalc.majors, 2)">
                 </label><br/>
                 <label>tercja mała
-                    <input type="checkbox" ng-model="intervalc.minort" ng-init="intervalc.minort=true" ng-click="loadIntervals(intervalc.minort, 3)">
+                    <input type="checkbox" ng-model="intervalc.minort" ng-init="intervalc.minort=true"
+                           ng-click="loadIntervals(intervalc.minort, 3)">
                 </label><br/>
                 <label>tercja wielka
-                    <input type="checkbox" ng-model="intervalc.majort" ng-init="intervalc.majort=true" ng-click="loadIntervals(intervalc.majort, 4)">
+                    <input type="checkbox" ng-model="intervalc.majort" ng-init="intervalc.majort=true"
+                           ng-click="loadIntervals(intervalc.majort, 4)">
                 </label><br/>
                 <label>oktawa
-                    <input type="checkbox" ng-model="intervalc.octave" ng-init="intervalc.octave=true" ng-click="loadIntervals(intervalc.octave, 12)">
+                    <input type="checkbox" ng-model="intervalc.octave" ng-init="intervalc.octave=true"
+                           ng-click="loadIntervals(intervalc.octave, 12)">
                 </label><br/>
             </label>
         </form>
-            </div>
-        <div>
-            <button ng-click="test(melodicCheckbox, descendingCheckbox)">graj</button>
-            <button ng-click="repeatLastInterval(melodicCheckbox, descendingCheckbox)">powtórz</button>
-            <br />
+    </div>
+    <div ng-if="state==0">
+        <button ng-click="goToTraning(melodicCheckbox, descendingCheckbox)">Trening</button>
+    </div>
 
-
-        </div>
+    <div ng-if="state==1">
+        <button ng-click="goToChallenge()">Wyzwanie</button>
+        <button ng-click="getRandomInterval()">Przykład</button>
         <br/>
-        <div>
-        <li ng-repeat="option in intervalQuestion.options">
-            <label>
-                <input type="radio" name="answer" value="{{option}}" ng-model="$parent.optionVal" ng-change="currentAnswer(optionVal)">
-            </label>
-                    {{option}}
-        </li>
-        </div>
+        {{tranningInterval}}
+    </div>
 
-        <div style="clear: both">
-            <button ng-click="checkAnswer()">sprawdz</button>
-            {{result}}
-        </div>
-
-<!--<div class="button2" ng-click="keySequence()"></div>-->
-<!--<div class="button" ng-click="pressKey(1)"></div>-->
-<!--<div class="button" ng-click="pressKey(3)"></div>-->
-<!--<div class="button" ng-click="pressKey(16)"></div>-->
-
-
-<div class="keys">
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[0] == 1,'notPressedKey':pressedArray[0] == 0 }" id="key1" ng-click="keySound(0)"></div>
-    <div class="key black black1" ng-class="{ 'pressedKey' : pressedArray[1] == 1,'notPressedKey':pressedArray[1] == 0 }" id="key2" ng-click="keySound(1)"></div>
-    <div class="key" id="key3"  ng-class="{ 'pressedKey' : pressedArray[2] == 1,'notPressedKey':pressedArray[2] == 0 }" ng-click="keySound(2)"></div>
-    <div class="key black black3" ng-class="{ 'pressedKey' : pressedArray[3] == 1,'notPressedKey':pressedArray[3] == 0 }" id="key4"  ng-click="keySound(3)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[4] == 1,'notPressedKey':pressedArray[4] == 0 }" id="key5" ng-click="keySound(4)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[5] == 1,'notPressedKey':pressedArray[5] == 0 } " id="key6" ng-click="keySound(5)"></div>
-    <div class="key black black1" ng-class="{ 'pressedKey' : pressedArray[6] == 1,'notPressedKey':pressedArray[6] == 0 }" id="key7" ng-click="keySound(6)"></div>
-    <div class="key"  ng-class="{ 'pressedKey' : pressedArray[7] == 1,'notPressedKey':pressedArray[7] == 0 } " id="key8" ng-click="keySound(7)"></div>
-    <div class="key black black5" ng-class="{ 'pressedKey' : pressedArray[8] == 1,'notPressedKey':pressedArray[8] == 0 }" id="key9" ng-click="keySound(8)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[9] == 1,'notPressedKey':pressedArray[9] == 0 }" id="key10" ng-click="keySound(9)"></div>
-    <div class="key black black2" ng-class="{ 'pressedKey' : pressedArray[10] == 1,'notPressedKey':pressedArray[10] == 0 }" id="key11" ng-click="keySound(10)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[11] == 1,'notPressedKey':pressedArray[11] == 0 }" id="key12" ng-click="keySound(11)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[12] == 1,'notPressedKey':pressedArray[12] == 0 }" id="key13" ng-click="keySound(12)"></div>
-    <div class="key black black3" ng-class="{ 'pressedKey' : pressedArray[13] == 1,'notPressedKey':pressedArray[13] == 0 }"id="key14"  ng-click="keySound(13)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[14] == 1,'notPressedKey':pressedArray[14] == 0 }" id="key15" ng-click="keySound(14)"></div>
-    <div class="key black black1" ng-class="{ 'pressedKey' : pressedArray[15] == 1,'notPressedKey':pressedArray[15] == 0 }" id="key16" ng-click="keySound(15)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[16] == 1,'notPressedKey':pressedArray[16] == 0 }"  id="key17" ng-click="keySound(16)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[17] == 1,'notPressedKey':pressedArray[17] == 0 }" id="key18" ng-click="keySound(17)"></div>
-    <div class="key black black3"ng-class="{ 'pressedKey' : pressedArray[18] == 1,'notPressedKey':pressedArray[18] == 0 }" id="key19"  ng-click="keySound(18)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[19] == 1,'notPressedKey':pressedArray[19] == 0 }" id="key20"  ng-click="keySound(19)"></div>
-    <div class="key black black3" ng-class="{ 'pressedKey' : pressedArray[20] == 1,'notPressedKey':pressedArray[20] == 0 }" id="key21" ng-click="keySound(20)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[21] == 1,'notPressedKey':pressedArray[21] == 0 }" id="key22" ng-click="keySound(21)"></div>
-    <div class="key black black1"ng-class="{ 'pressedKey' : pressedArray[22] == 1,'notPressedKey':pressedArray[22] == 0 }"  id="key23" ng-click="keySound(22)"></div>
-    <div class="key" ng-class="{ 'pressedKey' : pressedArray[23] == 1,'notPressedKey':pressedArray[23] == 0 }" id="key24"  ng-click="keySound(23)"></div>
-
-</div>
-        <div>
-            <vextab class="vex-tabdiv"
-                    width=680 scale=1.5 editor="true"
-                    editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
-            </vextab>
-        </div>
+    <div ng-if="state==2">
+        <button ng-click="test(melodicCheckbox, descendingCheckbox)">graj</button>
+        <button ng-click="repeatLastInterval(melodicCheckbox, descendingCheckbox)">powtórz</button>
+        <br/>
 
 
     </div>
+    <br/>
+
+    <div ng-if="state==2">
+        <li ng-repeat="option in intervalQuestion.options">
+            <label>
+                <input type="radio" name="answer" value="{{option}}" ng-model="$parent.optionVal"
+                       ng-change="currentAnswer(optionVal)">
+            </label>
+            {{option}}
+        </li>
+    </div>
+
+    <div style="clear: both" ng-if="state==2">
+        <button ng-click="checkAnswer()">sprawdz</button>
+        {{result}}
+    </div>
+
+    <!--<div class="button2" ng-click="keySequence()"></div>-->
+    <!--<div class="button" ng-click="pressKey(1)"></div>-->
+    <!--<div class="button" ng-click="pressKey(3)"></div>-->
+    <!--<div class="button" ng-click="pressKey(16)"></div>-->
+
+
+    <div class="keys">
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[0] == 1,'notPressedKey':pressedArray[0] == 0 }"
+             id="key1" ng-click="keySound(0)"></div>
+        <div class="key black black1"
+             ng-class="{ 'pressedKey' : pressedArray[1] == 1,'notPressedKey':pressedArray[1] == 0 }" id="key2"
+             ng-click="keySound(1)"></div>
+        <div class="key" id="key3"
+             ng-class="{ 'pressedKey' : pressedArray[2] == 1,'notPressedKey':pressedArray[2] == 0 }"
+             ng-click="keySound(2)"></div>
+        <div class="key black black3"
+             ng-class="{ 'pressedKey' : pressedArray[3] == 1,'notPressedKey':pressedArray[3] == 0 }" id="key4"
+             ng-click="keySound(3)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[4] == 1,'notPressedKey':pressedArray[4] == 0 }"
+             id="key5" ng-click="keySound(4)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[5] == 1,'notPressedKey':pressedArray[5] == 0 } "
+             id="key6" ng-click="keySound(5)"></div>
+        <div class="key black black1"
+             ng-class="{ 'pressedKey' : pressedArray[6] == 1,'notPressedKey':pressedArray[6] == 0 }" id="key7"
+             ng-click="keySound(6)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[7] == 1,'notPressedKey':pressedArray[7] == 0 } "
+             id="key8" ng-click="keySound(7)"></div>
+        <div class="key black black5"
+             ng-class="{ 'pressedKey' : pressedArray[8] == 1,'notPressedKey':pressedArray[8] == 0 }" id="key9"
+             ng-click="keySound(8)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[9] == 1,'notPressedKey':pressedArray[9] == 0 }"
+             id="key10" ng-click="keySound(9)"></div>
+        <div class="key black black2"
+             ng-class="{ 'pressedKey' : pressedArray[10] == 1,'notPressedKey':pressedArray[10] == 0 }" id="key11"
+             ng-click="keySound(10)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[11] == 1,'notPressedKey':pressedArray[11] == 0 }"
+             id="key12" ng-click="keySound(11)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[12] == 1,'notPressedKey':pressedArray[12] == 0 }"
+             id="key13" ng-click="keySound(12)"></div>
+        <div class="key black black3"
+             ng-class="{ 'pressedKey' : pressedArray[13] == 1,'notPressedKey':pressedArray[13] == 0 }" id="key14"
+             ng-click="keySound(13)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[14] == 1,'notPressedKey':pressedArray[14] == 0 }"
+             id="key15" ng-click="keySound(14)"></div>
+        <div class="key black black1"
+             ng-class="{ 'pressedKey' : pressedArray[15] == 1,'notPressedKey':pressedArray[15] == 0 }" id="key16"
+             ng-click="keySound(15)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[16] == 1,'notPressedKey':pressedArray[16] == 0 }"
+             id="key17" ng-click="keySound(16)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[17] == 1,'notPressedKey':pressedArray[17] == 0 }"
+             id="key18" ng-click="keySound(17)"></div>
+        <div class="key black black3"
+             ng-class="{ 'pressedKey' : pressedArray[18] == 1,'notPressedKey':pressedArray[18] == 0 }" id="key19"
+             ng-click="keySound(18)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[19] == 1,'notPressedKey':pressedArray[19] == 0 }"
+             id="key20" ng-click="keySound(19)"></div>
+        <div class="key black black3"
+             ng-class="{ 'pressedKey' : pressedArray[20] == 1,'notPressedKey':pressedArray[20] == 0 }" id="key21"
+             ng-click="keySound(20)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[21] == 1,'notPressedKey':pressedArray[21] == 0 }"
+             id="key22" ng-click="keySound(21)"></div>
+        <div class="key black black1"
+             ng-class="{ 'pressedKey' : pressedArray[22] == 1,'notPressedKey':pressedArray[22] == 0 }" id="key23"
+             ng-click="keySound(22)"></div>
+        <div class="key" ng-class="{ 'pressedKey' : pressedArray[23] == 1,'notPressedKey':pressedArray[23] == 0 }"
+             id="key24" ng-click="keySound(23)"></div>
+
+    </div>
+    <div>
+        <vextab class="vex-tabdiv"
+                width=680 scale=1.5 editor="true"
+                editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
+        </vextab>
+    </div>
+
+
+</div>
 </body>

@@ -4,26 +4,31 @@
 
 
 app.controller('intervalsController', function ($scope, $timeout) {
-    $scope.keySound = function(i) {
+    $scope.keySound = function (i) {
         MIDI.loadPlugin({
             soundfontUrl: "./soundfont/",
             instrument: "acoustic_grand_piano",
-            onprogress: function(i) {
+            onprogress: function (i) {
                 console.log(i);
             },
-            onsuccess: function() {
+            onsuccess: function () {
                 var delay = 0; // play one note every quarter second
                 var note = 50; // the MIDI note
                 var velocity = 127; // how hard the note hits
                 // play the note
                 MIDI.setVolume(0, 127);
-                MIDI.noteOn(0, note +i , velocity, delay);
+                MIDI.noteOn(0, note + i, velocity, delay);
                 MIDI.noteOff(0, note + i, delay + 0.75);
             }
         });
     };
 
-   var numberToIntervalName = {
+    $scope.state = 0;
+    $scope.tranningInterval = "";
+    var melodic;
+    var desc;
+
+    var numberToIntervalName = {
         0: 'pryma',
         1: 'sekunda mała',
         2: 'sekunda wielka',
@@ -97,18 +102,19 @@ app.controller('intervalsController', function ($scope, $timeout) {
                 $scope.nextQuestion(numberToIntervalName[Number(interval[1])]);
                 playInterval(interval[0], interval[1], melodicCheckbox, descendingCheckbox);
                 $scope.randomNotes = $scope.notesOptions;
+                $scope.result = "";
                 $scope.$apply();
                 console.log(numberToIntervalName[lastPlayedCombination[1]])
             }
         });
     };
 
-    $scope.repeatLastInterval = function (melodicCheckbox, descendingCheckboc) {
+    $scope.repeatLastInterval = function (melodicCheckbox, descendingCheckbox) {
         MIDI.loadPlugin({
             soundfontUrl: "./soundfont/",
             instrument: "acoustic_grand_piano",
             onsuccess: function () {
-                playInterval(lastPlayedCombination[0], lastPlayedCombination[1], melodicCheckbox, descendingCheckboc);
+                playInterval(lastPlayedCombination[0], lastPlayedCombination[1], melodicCheckbox, descendingCheckbox);
 
             },
             onerror: function () {
@@ -117,20 +123,20 @@ app.controller('intervalsController', function ($scope, $timeout) {
         });
     };
 
-    $scope.checkAnswer = function() {
-        if(currAns == $scope.intervalQuestion.answer) {
+    $scope.checkAnswer = function () {
+        if (currAns == $scope.intervalQuestion.answer) {
             $scope.result = "DOBRZE"
         } else {
             $scope.result = "ŹLE"
         }
-            $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
-                                    +"\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
-            $scope.pressKey(note1);
-            $scope.pressKey(note2);
+        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
+            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
+        $scope.pressKey(note1);
+        $scope.pressKey(note2);
     };
 
 
-    $scope.currentAnswer = function(ans) {
+    $scope.currentAnswer = function (ans) {
         //$scope.nextQuestion(ans);
         currAns = ans;
     };
@@ -139,7 +145,7 @@ app.controller('intervalsController', function ($scope, $timeout) {
     $scope.nextQuestion = function (answer) {
         $scope.intervalQuestion.options = [];
         for (var i = 0; i < Object.keys(numberToIntervalName).length; i++) {
-                   $scope.intervalQuestion.options.push(numberToIntervalName[Object.keys(numberToIntervalName)[i]]);
+            $scope.intervalQuestion.options.push(numberToIntervalName[Object.keys(numberToIntervalName)[i]]);
         }
         $scope.intervalQuestion.answer = answer;
     };
@@ -148,21 +154,44 @@ app.controller('intervalsController', function ($scope, $timeout) {
         $scope.nextQuestion("wrong");
     });
 
-    $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    $scope.pressedArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    $scope.pressKey = function(i){
-        console.log(i+1);
+    $scope.pressKey = function (i) {
+        console.log(i + 1);
         $scope.pressedArray[i] = 1;
         //$timeout(function(){$scope.pressedArray[i] =0;}, 2000);
     };
 
-    $scope.unPressKey = function(){
-        $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    $scope.unPressKey = function () {
+        $scope.pressedArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     };
-    $scope.keySequence = function(){
-            //$scope.pressKey(0);
-            //$scope.pressKey(2);
-            //$scope.pressKey(16);
+
+    $scope.goToTraning = function(mel, de) {
+        MIDI.loadPlugin({
+            soundfontUrl: "./soundfont/",
+            instrument: "acoustic_grand_piano",
+            onsuccess: function () {
+                melodic = mel;
+                desc = de;
+                $scope.state = 1;
+            }
+        });
+
+    };
+    $scope.goToChallenge = function() {
+        $scope.state = 2;
+        $scope.unPressKey();
+        $scope.randomNotes = $scope.notesOptions
+    };
+    $scope.getRandomInterval = function() {
+        $scope.unPressKey();
+        var inter = randomInterval();
+        playInterval(inter[0], inter[1], melodic, desc);
+        $scope.tranningInterval = numberToIntervalName[Number(inter[1])];
+        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
+            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
+        $scope.pressKey(note1);
+        $scope.pressKey(note2);
     };
 
 
@@ -175,7 +204,7 @@ app.controller('intervalsController', function ($scope, $timeout) {
         return [noteNumber, interval];
     }
 
-    function playInterval(baseNote, intervalRange, melodicCheckbox, descendingCheckboc) {
+    function playInterval(baseNote, intervalRange, melodicCheckbox, descendingCheckbox) {
         var delay = 0; // play one note every quarter second
         var delay2 = 0; // play one note every quarter second
         var velocity = 255; // how hard the note hits
@@ -186,16 +215,16 @@ app.controller('intervalsController', function ($scope, $timeout) {
             delay2 = 1;
         }
 
-        if (!!descendingCheckboc) {
+        if (!!descendingCheckbox) {
             op = function (a, b) {
                 return Number(a) - Number(b)
             };
         }
 
-        note1 = baseNote%12;
+        note1 = baseNote % 12;
         note2 = (Number(baseNote) + Number(intervalRange)) % 12;
-        octave1 = Math.floor(baseNote/12);
-        octave2 = Math.floor((Number(baseNote) + Number(intervalRange))/12);
+        octave1 = Math.floor(baseNote / 12);
+        octave2 = Math.floor((Number(baseNote) + Number(intervalRange)) / 12);
         //console.log(baseNote)
         //console.log(intervalRange)
         //console.log(note1)
