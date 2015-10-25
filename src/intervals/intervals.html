@@ -13,6 +13,8 @@
             </label>
             <br>
         </form>
+        <br/>
+        <br/>
         <form>
             <label>Jakie interwały?
                 <br/>
@@ -84,7 +86,7 @@
     <!--<div class="button" ng-click="pressKey(16)"></div>-->
 
 
-    <div class="keys">
+    <div class="keys" ng-if="state!=0">
         <div class="key" ng-class="{ 'pressedKey' : pressedArray[0] == 1,'notPressedKey':pressedArray[0] == 0 }"
              id="key1" ng-click="keySound(0)"></div>
         <div class="key black black1"
@@ -146,7 +148,7 @@
              id="key24" ng-click="keySound(23)"></div>
 
     </div>
-    <div>
+    <div ng-if="state!=0">
         <vextab class="vex-tabdiv"
                 width=680 scale=1.5 editor="true"
                 editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
