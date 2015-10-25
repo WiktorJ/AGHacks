@@ -1,9 +1,10 @@
-app.controller('notationController', function ($scope,$timeout) {
+app.controller('notationController', function ($scope, $timeout) {
 
-    $scope.text="Sprawdź";
+    $scope.text = "Sprawdź";
     $scope.notesOptions = "options space=5\ntabstave\nnotation=true\ntablature=false\nnotes ";
     $scope.numberOfSegments = 3;
 
+    var newNotes = false;
 
     $scope.getNumbersFromRange = function (min, max) {
         return parseInt(Math.random() * (max - min) + min, 10);
@@ -23,16 +24,16 @@ app.controller('notationController', function ($scope,$timeout) {
 
 
             var randomNumber = $scope.getNumbersFromRange(4, 6);
-            if(randomNumber>=6){
+            if (randomNumber >= 6) {
                 outputSegment = outputSegment + $scope.getRandomNote();
                 var hashRandomNumber = $scope.getNumbersFromRange(0, 10);
                 outputSegment = outputSegment + '/' + randomNumber.toString();
             }
-            else{
-                var greaterRandomNumber = $scope.getNumbersFromRange(4,10);
-                var smallerNumber = $scope.getNumbersFromRange(4,6);
+            else {
+                var greaterRandomNumber = $scope.getNumbersFromRange(4, 10);
+                var smallerNumber = $scope.getNumbersFromRange(4, 6);
                 var modifier = ["", "n", "#", "@"];
-                outputSegment = outputSegment +  $scope.getRandomNote() + modifier[$scope.getNumbersFromRange(0, modifier.length)] + '/' + smallerNumber;
+                outputSegment = outputSegment + $scope.getRandomNote() + modifier[$scope.getNumbersFromRange(0, modifier.length)] + '/' + smallerNumber;
             }
 
             outputSegment = outputSegment + ' ';
@@ -60,24 +61,37 @@ app.controller('notationController', function ($scope,$timeout) {
     //0 -> not known
     //-1 -> false
     $scope.correctAnswer = 0;
-    $scope.check = function(){
+    $scope.check = function () {
 
-        console.log(document.getElementById('userInput').value);
-        console.log($scope.generatedNotes);
+        if (newNotes) {
+            $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
+            $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
+            document.getElementById('userInput').value = "";
+            newNotes = false;
+        } else {
 
-        if(document.getElementById('userInput').value == $scope.generatedNotes.trim()){
-            $scope.correctAnswer=1;
-            $scope.text="Ok";
+
+            console.log(document.getElementById('userInput').value);
+            console.log($scope.generatedNotes);
+
+            if (document.getElementById('userInput').value.trim() == $scope.generatedNotes.trim()) {
+                $scope.correctAnswer = 1;
+                $scope.text = "Ok";
+                $timeout(function () {
+                    $scope.correctAnswer = 0;
+                    $scope.text = "Powtórz";
+                }, 1000);
+                newNotes = true;
+            }
+            else {
+                $scope.correctAnswer = -1;
+                $scope.text = "Błąd";
+                $timeout(function () {
+                    $scope.correctAnswer = 0;
+                    $scope.text = "Sprawdź";
+                }, 3000);
+            }
         }
-        else{
-            $scope.correctAnswer=-1;
-            $scope.text="Błąd";
-        }
-
-        $timeout(function(){
-            $scope.correctAnswer=0;
-            $scope.text="Sprawdź";
-        },3000);
     }
 
 });
