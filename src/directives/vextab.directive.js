@@ -14,6 +14,14 @@ app.directive('vextab', function($compile){
         },
         link: function(scope, element, attrs){
             try {
+                scope.$watch('notesString', function (oldVal, newVal) {
+                    vextab.reset();
+                    artist.reset();
+                    vextab.parse(scope.notesString);
+                    artist.render(renderer);
+
+                });
+
                 vextab.reset();
                 artist.reset();
 

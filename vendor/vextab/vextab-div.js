@@ -27986,7 +27986,7 @@ Vex.Flow.TabDiv = function(sel, options) {
   if (arguments.length > 0) this.init(sel, options);
 }
 
-Vex.Flow.TabDiv.SEL = ".vex-tabdiv";
+    Vex.Flow.TabDiv.SEL = ".vex-tabdiv";
 Vex.Flow.TabDiv.ERROR_NOCANVAS =
   "<b>This browser does not support HTML5 Canvas</b><br/>" +
   "Please use a modern browser such as <a href='http://google.com/chrome'>" +

@@ -1,8 +1,8 @@
 app.controller('notationController', function ($scope,$timeout) {
 
     $scope.text="Sprawdź";
-    $scope.notesOptions = "options space=20\ntabstave\nnotation=true\ntablature=false\nnotes ";
-    $scope.numberOfSegments = 12;
+    $scope.notesOptions = "options space=5\ntabstave\nnotation=true\ntablature=false\nnotes ";
+    $scope.numberOfSegments = 3;
 
 
     $scope.getNumbersFromRange = function (min, max) {
@@ -22,7 +22,7 @@ app.controller('notationController', function ($scope,$timeout) {
         for (var i = 0; i < nSegments; i++) {
 
 
-            var randomNumber = $scope.getNumbersFromRange(4, 7);
+            var randomNumber = $scope.getNumbersFromRange(4, 6);
             if(randomNumber>=6){
                 outputSegment = outputSegment + $scope.getRandomNote();
                 var hashRandomNumber = $scope.getNumbersFromRange(0, 10);
@@ -30,8 +30,9 @@ app.controller('notationController', function ($scope,$timeout) {
             }
             else{
                 var greaterRandomNumber = $scope.getNumbersFromRange(4,10);
-                var smallerNumber = $scope.getNumbersFromRange(1,greaterRandomNumber >7 ? 6 : greaterRandomNumber);
-                outputSegment = outputSegment + greaterRandomNumber + '/' + smallerNumber;
+                var smallerNumber = $scope.getNumbersFromRange(4,6);
+                var modifier = ["", "n", "#", "@"];
+                outputSegment = outputSegment +  $scope.getRandomNote() + modifier[$scope.getNumbersFromRange(0, modifier.length)] + '/' + smallerNumber;
             }
 
             outputSegment = outputSegment + ' ';
@@ -52,7 +53,7 @@ app.controller('notationController', function ($scope,$timeout) {
 
     $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
     $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
-    console.log($scope.randomNotes);
+    console.log("scoper: " + $scope.randomNotes);
 
 
     //1 -> true
@@ -60,7 +61,7 @@ app.controller('notationController', function ($scope,$timeout) {
     //-1 -> false
     $scope.correctAnswer = 0;
     $scope.check = function(){
-        console.log();
+
         console.log(document.getElementById('userInput').value);
         console.log($scope.generatedNotes);
 

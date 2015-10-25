@@ -1,3 +1,7 @@
+<html>
+<head>
+</head>
+<body>
 <h2>Interwały</h2>
 <form>
     <label>Melodycznie:
@@ -43,7 +47,6 @@
             {{option}}
 </li>
 
-<ion-radio ng-repea>
 
 <div class="keys">
     <div class="key" id="key1" ng-click="keySound(0)"></div>
@@ -73,4 +76,12 @@
 
 </div>
 </ion-radio>
+<div id="vexx">
+<vextab class="vex-tabdiv"
+        width=680 scale=1.5 editor="true"
+        editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
+</vextab>
+</div>
 <button ng-click="checkAnswer()">sprawdz</button>
+</body>
+</html>

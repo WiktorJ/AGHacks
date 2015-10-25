@@ -2,7 +2,6 @@
  * Created by wiktor on 24.10.15.
  */
 
-
 app.controller('intervalsController', function ($scope) {
     $scope.keySound = function(i) {
         MIDI.loadPlugin({
@@ -41,6 +40,21 @@ app.controller('intervalsController', function ($scope) {
         12: 'oktawa'
     };
 
+    var numberToNote = {
+        0: "C",
+        1: "C#",
+        2: "D",
+        3: "D#",
+        4: "E",
+        5: "F",
+        6: "F#",
+        7: "G",
+        8: "G#",
+        9: "A",
+        10: "A#",
+        11: "B"
+    };
+
     $scope.intervalQuestion = {
         question: "Wybierz interwał",
         options: [],
@@ -49,8 +63,16 @@ app.controller('intervalsController', function ($scope) {
 
     var lastPlayedCombination = [];
     var currAns;
+    var octave1 = -1;
+    var octave2 = -1;
+    var note1 = -1;
+    var note2 = -1;
+
 
     $scope.result = "";
+
+    $scope.notesOptions = "options space=20\ntabstave\nnotation=true\ntablature=false";
+    $scope.randomNotes = $scope.notesOptions;
 
 
     $scope.loadIntervals = function (intervalsCheckboxes, number) {
@@ -72,6 +94,8 @@ app.controller('intervalsController', function ($scope) {
                 lastPlayedCombination = interval;
                 $scope.nextQuestion(numberToIntervalName[Number(interval[1])]);
                 playInterval(interval[0], interval[1], melodicCheckbox, descendingCheckbox);
+                $scope.randomNotes = $scope.notesOptions;
+                $scope.$apply();
                 console.log(numberToIntervalName[lastPlayedCombination[1]])
             }
         });
@@ -82,7 +106,6 @@ app.controller('intervalsController', function ($scope) {
             soundfontUrl: "./soundfont/",
             instrument: "acoustic_grand_piano",
             onsuccess: function () {
-                MIDI.setVolume(0, 511);
                 playInterval(lastPlayedCombination[0], lastPlayedCombination[1], melodicCheckbox, descendingCheckboc);
 
             },
@@ -98,6 +121,8 @@ app.controller('intervalsController', function ($scope) {
         } else {
             $scope.result = "ŹLE"
         }
+            $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
+                                    +"\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
     };
 
 
@@ -144,6 +169,18 @@ app.controller('intervalsController', function ($scope) {
                 return Number(a) - Number(b)
             };
         }
+
+        note1 = baseNote%12;
+        note2 = (Number(baseNote) + Number(intervalRange)) % 12;
+        octave1 = Math.floor(baseNote/12);
+        octave2 = Math.floor((Number(baseNote) + Number(intervalRange))/12);
+        //console.log(baseNote)
+        //console.log(intervalRange)
+        //console.log(note1)
+        //console.log(note2)
+        //console.log(octave1)
+        //console.log(octave2)
+
 
         MIDI.setVolume(0, 511);
         MIDI.noteOn(0, baseNote, velocity, delay);
