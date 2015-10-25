@@ -9,10 +9,13 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
             var canvas = iElem[0].children[0];
             var ctx = canvas.getContext('2d');
 
-            var song;
+            var song, bpm, bps, bitTime;
 
             var data = {
-                arrows_down: {}
+                arrows_down: {},
+                beatNo: 0,
+                noteIndex: 0,
+                arrowsDrawed: []
             };
 
             scope.running = false;
@@ -146,10 +149,43 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     }
                 }
                 beat.draw();
+
+                data.arrowsDrawed.forEach(function (a) {
+                    a.draw();
+                });
+
                 ctx.restore();
             }
 
-            function tick() {
+            function arrDrawn(x){
+                var offset = {
+                    left: 0,
+                    top: 1,
+                    bottom: 2,
+                    right: 3
+                };
+                return {
+                    x: offset[x.direction]*128,
+                    y: 0,
+                    opacity: 0,
+                    draw: function () {
+                        ctx.save();
+                        ctx.translate(this.x, this.y);
+                        ctx.globalAlpha = this.opacity/100;
+                        arrow.draw(x.direction);
+                        ctx.restore();
+                    }
+                }
+            }
+
+            var start;
+
+            function tick(ts) {
+
+                if(!start) start = ts;
+                progress = ts - start;
+
+
                 for (var i = 37; i <= 40; i++) {
                     if (data.arrows_down[i] > 0) {
                         data.arrows_down[i] -= 4;
@@ -158,6 +194,19 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                 if(data.beat > 0){
                     data.beat -= 3;
                 }
+
+                if(song.notes[data.noteIndex] && song.notes[data.noteIndex].beatNo <= data.beatNo + 2){
+                    data.arrowsDrawed.push(arrDrawn(song.notes[data.noteIndex]));
+                    data.noteIndex++;
+                }
+
+                data.arrowsDrawed.forEach(function (a) {
+                    if(a.opacity < 100) {
+                        a.opacity += 2;
+                    }else{
+                        a.y += (height-128- a.y)/2*bitTime;
+                    }
+                })
             }
 
             window.addEventListener('keydown', function (evt) {
@@ -173,9 +222,10 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
             });
 
 
-            function loop() {
+            function loop(timestamp) {
 
-                tick();
+
+                tick(timestamp);
                 paint();
 
                 $rootScope.animationFrameId = requestAnimationFrame(loop);
@@ -184,15 +234,15 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
             scope.startGame = function () {
                 scope.running = true;
 
-                song = songsInfo.talkDirty;
+                song = songsInfo.lovers;
 
                 var audio = new Audio(song.src);
                 audio.play();
 
-                var bpm = song.bpm;
-                var bps = bpm/60;
+                bpm = song.bpm;
+                bps = bpm/60;
 
-                var bitTime = 1/bps;
+                bitTime = 1/bps;
 
 
 
@@ -200,6 +250,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     loop();
                     setInterval(function () {
                         data.beat = 100;
+                        data.beatNo++;
                         console.log('beat!')
                     }, bitTime*1000);
                 }, song.latency*bitTime*1000); // for talkDirty 3*bitTime

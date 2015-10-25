@@ -7,7 +7,7 @@ app.factory('songsInfo', function () {
         latency: 0,
         notes: [
             {
-                direction: 'left',
+                direction: 'top',
                 beatNo: 7
             }
         ]
@@ -20,7 +20,7 @@ app.factory('songsInfo', function () {
         latency: 3,
         notes: [
             {
-                direction: 'left',
+                direction: 'top',
                 beatNo: 7
             }
         ]
