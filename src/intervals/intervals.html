@@ -1,9 +1,9 @@
 <body>
 <h2>Interwały</h2>
-
-<div>
-    <div ng-if="state==0">
+<div style="position: relative">
+    <div id="intervalsOptionsMenu" ng-if="state==0">
         <form>
+            <h3>OPCJE</h3>
             <label>Melodycznie:
                 <input type="checkbox" ng-model="melodicCheckbox" ng-init="melodicCheckbox=false">
             </label>
@@ -16,7 +16,7 @@
         <br/>
         <br/>
         <form>
-            <label>Jakie interwały?
+            <label><h3>TYPY INTERWAŁÓW</h3>
                 <br/>
                 <label>pryma
                     <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true"
@@ -44,26 +44,30 @@
                 </label><br/>
             </label>
         </form>
-    </div>
-    <div ng-if="state==0">
-        <button ng-click="goToTraning(melodicCheckbox, descendingCheckbox)">Trening</button>
+
+        <div ng-if="state==0" style="margin-top: 45px" align="centre">
+            <button class="button1" ng-click="goToTraning(melodicCheckbox, descendingCheckbox)">Trening</button>
+        </div>
     </div>
 
-    <div ng-if="state==1">
-        <button ng-click="goToChallenge()">Wyzwanie</button>
-        <button ng-click="getRandomInterval()">Przykład</button>
+
+    <div ng-if="state==1" align="center">
+        <br><br>
+        <button ng-click="goToChallenge()" class="button1">Wyzwanie</button>
+        <button ng-click="getRandomInterval()"class="button1">Przykład</button>
         <br/>
         {{tranningInterval}}
     </div>
 
-    <div ng-if="state==2">
+    <div ng-if="state==2" align="center">
         <button ng-click="test(melodicCheckbox, descendingCheckbox)">graj</button>
         <button ng-click="repeatLastInterval(melodicCheckbox, descendingCheckbox)">powtórz</button>
-        <br/>
-
+        <button ng-click="checkAnswer()">sprawdz</button>
+        <br>
+        {{result}}
 
     </div>
-    <br/>
+    <br>
 
     <div ng-if="state==2">
         <li ng-repeat="option in intervalQuestion.options">
@@ -76,17 +80,20 @@
     </div>
 
     <div style="clear: both" ng-if="state==2">
-        <button ng-click="checkAnswer()">sprawdz</button>
-        {{result}}
+
     </div>
 
-    <!--<div class="button2" ng-click="keySequence()"></div>-->
-    <!--<div class="button" ng-click="pressKey(1)"></div>-->
-    <!--<div class="button" ng-click="pressKey(3)"></div>-->
-    <!--<div class="button" ng-click="pressKey(16)"></div>-->
 
+    <div ng-if="state!=0"  align="center">
+        <vextab class="vex-tabdiv"
+                width=680 scale=1.5 editor="true"
+                editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
+        </vextab>
+    </div>
 
-    <div class="keys" ng-if="state!=0">
+    <br>
+
+    <div class="keys" ng-if="state!=0" align="right">
         <div class="key" ng-class="{ 'pressedKey' : pressedArray[0] == 1,'notPressedKey':pressedArray[0] == 0 }"
              id="key1" ng-click="keySound(0)"></div>
         <div class="key black black1"
@@ -146,15 +153,7 @@
              ng-click="keySound(22)"></div>
         <div class="key" ng-class="{ 'pressedKey' : pressedArray[23] == 1,'notPressedKey':pressedArray[23] == 0 }"
              id="key24" ng-click="keySound(23)"></div>
-
     </div>
-    <div ng-if="state!=0">
-        <vextab class="vex-tabdiv"
-                width=680 scale=1.5 editor="true"
-                editor_width=680 editor_height=330 notes-string="{{randomNotes}}">
-        </vextab>
-    </div>
-
 
 </div>
 </body>
