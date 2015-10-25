@@ -13,7 +13,7 @@ body {
   height: 100%;
   min-height: 100%;
   background-image: url('../assets/left.jpg'), url('../assets/right.jpg');
-  background-repeat: no-repeat, no-repeat;
+  background-repeat: no-repeat;
   background-position: center left, center right;
 }
 #container {
@@ -38,14 +38,16 @@ h1 {
   background: #fff;
   border: 1px solid #ccc;
   width: 45%;
-  float: left;
+  margin: 10px auto;
   font-size: 1.5em;
-  height: 200px;
-  margin: 0 2% 2% 2%;
+  height: 100px;
   text-align: center;
-  line-height: 200px;
+  line-height: 100px;
   cursor: pointer;
   transition: all .4s;
+}
+#menu {
+  text-align: center;
 }
 .tab:hover {
   background: #000;
