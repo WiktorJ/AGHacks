@@ -9,8 +9,11 @@
         </div>
         <div id="answers">
             <form>
-                Odpowiedź:<br>
-                <input type="text" id="notationInput" name="answer">
+                Odpowiedzi:<br>
+                <input class="notationIn" type="text" ng-model="notationInput1" name="answer" ng-class="{ 'correct' : correctA[0] == 1, 'incorrect' : correctA[0] == 0, 'notAnswered' : correctA[0] == -1}">
+                <input class="notationIn" type="text" ng-model="notationInput2" name="answer"  ng-class="{ 'correct' : correctA[1] == 1, 'incorrect' : correctA[1] == 0, 'notAnswered' : correctA[1] == -1}">
+                <input class="notationIn" type="text" ng-model="notationInput3" name="answer"  ng-class="{ 'correct' : correctA[2] == 1, 'incorrect' : correctA[2] == 0, 'notAnswered' : correctA[2] == -1}">
+
             </form>
         </div>
     </div>

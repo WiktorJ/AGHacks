@@ -61,7 +61,6 @@ h1 {
   background: #fff;
   border-radius: 0 0 4px 4px;
   border: 1px solid black;
-  padding: 20px;
 }
 .key.pressed,
 .key:active {
@@ -94,6 +93,13 @@ h1 {
 .key.black.pressed:after,
 .key.black:active:after {
   background-color: #222;
+}
+.notationIn {
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100px;
+  height: 25px;
+  font-size: 0.75em;
 }
 #questions {
   padding: 20px;
@@ -146,6 +152,12 @@ h1 {
 }
 .pressedKey {
   background-color: green;
+}
+.correct {
+  background-color: green;
+}
+.incorrect {
+  background-color: red;
 }
 button {
   background: #fff;
