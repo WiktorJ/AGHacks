@@ -1,76 +1,96 @@
-<h2>Interwały</h2>
-<form>
-    <label>Melodycznie:
-        <input type="checkbox" ng-model="melodicCheckbox" ng-init="melodicCheckbox=false">
-    </label>
-    <label>pierwszy niższy:
-        <input type="checkbox" ng-model="descendingCheckbox" ng-init="descendingCheckbox=false">
-    </label>
-</form>
-<br/>
-<br/>
-<form>
-    <label>Jakie interwały?
+<body>
+    <h2>Interwały</h2>
+    <div>
+        <div>
+        <form>
+            <label>Melodycznie:
+                <input type="checkbox" ng-model="melodicCheckbox" ng-init="melodicCheckbox=false">
+            </label>
+            <br>
+            <label>pierwszy niższy:
+                <input type="checkbox" ng-model="descendingCheckbox" ng-init="descendingCheckbox=false">
+            </label>
+            <br>
+        </form>
+        <form>
+            <label>Jakie interwały?
+                <br />
+                <label>pryma
+                    <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true" ng-click="loadIntervals(intervalc.unison, 0)">
+                </label><br/>
+                <label>sekunda mała
+                    <input type="checkbox" ng-model="intervalc.minors" ng-init="intervalc.minors=true" ng-click="loadIntervals(intervalc.minors, 1)">
+                </label><br/>
+                <label>sekunda wielka
+                    <input type="checkbox" ng-model="intervalc.majors" ng-init="intervalc.majors=true" ng-click="loadIntervals(intervalc.majors, 2)">
+                </label><br/>
+                <label>tercja mała
+                    <input type="checkbox" ng-model="intervalc.minort" ng-init="intervalc.minort=true" ng-click="loadIntervals(intervalc.minort, 3)">
+                </label><br/>
+                <label>tercja wielka
+                    <input type="checkbox" ng-model="intervalc.majort" ng-init="intervalc.majort=true" ng-click="loadIntervals(intervalc.majort, 4)">
+                </label><br/>
+                <label>oktawa
+                    <input type="checkbox" ng-model="intervalc.octave" ng-init="intervalc.octave=true" ng-click="loadIntervals(intervalc.octave, 12)">
+                </label><br/>
+            </label>
+        </form>
+            </div>
+        <div>
+            <button ng-click="test(melodicCheckbox, descendingCheckbox)">graj</button>
+            <button ng-click="repeatLastInterval(melodicCheckbox, descendingCheckbox)">powtórz</button>
+            <br />
+
+
+        </div>
         <br/>
-        <label>pryma
-            <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true" ng-click="loadIntervals(intervalc.unison, 0)">
-        </label><br/>
-        <label>sekunda mała
-            <input type="checkbox" ng-model="intervalc.minors" ng-init="intervalc.minors=true" ng-click="loadIntervals(intervalc.minors, 1)">
-        </label><br/>
-        <label>sekunda wielka
-            <input type="checkbox" ng-model="intervalc.majors" ng-init="intervalc.majors=true" ng-click="loadIntervals(intervalc.majors, 2)">
-        </label><br/>
-        <label>tercja mała
-            <input type="checkbox" ng-model="intervalc.minort" ng-init="intervalc.minort=true" ng-click="loadIntervals(intervalc.minort, 3)">
-        </label><br/>
-        <label>tercja wielka
-            <input type="checkbox" ng-model="intervalc.majort" ng-init="intervalc.majort=true" ng-click="loadIntervals(intervalc.majort, 4)">
-        </label><br/>
-        <label>oktawa
-            <input type="checkbox" ng-model="intervalc.octave" ng-init="intervalc.octave=true" ng-click="loadIntervals(intervalc.octave, 12)">
-        </label><br/>
-    </label>
-</form>
-<button ng-click="test(melodicCheckbox, descendingCheckbox)">graj</button>
-<button ng-click="repeatLastInterval(melodicCheckbox, descendingCheckbox)">powtórz</button>
-{{result}}
-<br/>
-<li ng-repeat="option in intervalQuestion.options">
-    <label>
-        <input type="radio" name="answer" value="{{option}}" ng-model="$parent.optionVal" ng-change="currentAnswer(optionVal)">
-        </label>
-            {{option}}
-</li>
+        <div>
+        <li ng-repeat="option in intervalQuestion.options">
+            <label>
+                <input type="radio" name="answer" value="{{option}}" ng-model="$parent.optionVal" ng-change="currentAnswer(optionVal)">
+            </label>
+                    {{option}}
+        </li>
+        </div>
 
-<ion-radio ng-repea>
+        <div style="clear: both">
+            <button ng-click="checkAnswer()">sprawdz</button>
+            {{result}}
+        </div>
 
-<div class="keys">
-    <div class="key" id="key1" ng-click="keySound(0)"></div>
-    <div class="key black black1" id="key2" ng-click="keySound(1)"></div>
-    <div class="key" id="key3"  ng-click="keySound(2)"></div>
-    <div class="key black black3" id="key4"  ng-click="keySound(3)"></div>
-    <div class="key"  id="key5" ng-click="keySound(4)"></div>
-    <div class="key"  id="key6" ng-click="keySound(5)"></div>
-    <div class="key black black1"  id="key7" ng-click="keySound(6)"></div>
-    <div class="key"  id="key8" ng-click="keySound(7)"></div>
-    <div class="key black black5"  id="key9" ng-click="keySound(8)"></div>
-    <div class="key"  id="key10" ng-click="keySound(9)"></div>
-    <div class="key black black2"  id="key11" ng-click="keySound(10)"></div>
-    <div class="key"  id="key12" ng-click="keySound(11)"></div>
-    <div class="key"  id="key13" ng-click="keySound(12)"></div>
-    <div class="key black black3" id="key14"  ng-click="keySound(13)"></div>
-    <div class="key"  id="key15" ng-click="keySound(14)"></div>
-    <div class="key black black1"  id="key16" ng-click="keySound(15)"></div>
-    <div class="key"  id="key17" ng-click="keySound(16)"></div>
-    <div class="key"  id="key18" ng-click="keySound(17)"></div>
-    <div class="key black black3" id="key19"  ng-click="keySound(18)"></div>
-    <div class="key" id="key20"  ng-click="keySound(19)"></div>
-    <div class="key black black3"  id="key21" ng-click="keySound(20)"></div>
-    <div class="key"  id="key22" ng-click="keySound(21)"></div>
-    <div class="key black black1"  id="key23" ng-click="keySound(22)"></div>
-    <div class="key" id="key24"  ng-click="keySound(23)"></div>
+        <div>
+            <div class="keys">
+                <div class="key" id="key1" ng-click="keySound(0)"></div>
+                <div class="key black black1" id="key2" ng-click="keySound(1)"></div>
+                <div class="key" id="key3"  ng-click="keySound(2)"></div>
+                <div class="key black black3" id="key4"  ng-click="keySound(3)"></div>
+                <div class="key"  id="key5" ng-click="keySound(4)"></div>
+                <div class="key"  id="key6" ng-click="keySound(5)"></div>
+                <div class="key black black1"  id="key7" ng-click="keySound(6)"></div>
+                <div class="key"  id="key8" ng-click="keySound(7)"></div>
+                <div class="key black black5"  id="key9" ng-click="keySound(8)"></div>
+                <div class="key"  id="key10" ng-click="keySound(9)"></div>
+                <div class="key black black2"  id="key11" ng-click="keySound(10)"></div>
+                <div class="key"  id="key12" ng-click="keySound(11)"></div>
+                <div class="key"  id="key13" ng-click="keySound(12)"></div>
+                <div class="key black black3" id="key14"  ng-click="keySound(13)"></div>
+                <div class="key"  id="key15" ng-click="keySound(14)"></div>
+                <div class="key black black1"  id="key16" ng-click="keySound(15)"></div>
+                <div class="key"  id="key17" ng-click="keySound(16)"></div>
+                <div class="key"  id="key18" ng-click="keySound(17)"></div>
+                <div class="key black black3" id="key19"  ng-click="keySound(18)"></div>
+                <div class="key" id="key20"  ng-click="keySound(19)"></div>
+                <div class="key black black3"  id="key21" ng-click="keySound(20)"></div>
+                <div class="key"  id="key22" ng-click="keySound(21)"></div>
+                <div class="key black black1"  id="key23" ng-click="keySound(22)"></div>
+                <div class="key" id="key24"  ng-click="keySound(23)"></div>
+            </div>
+        </div>
 
-</div>
-</ion-radio>
-<button ng-click="checkAnswer()">sprawdz</button>
+        <div>
+
+        </div>
+
+
+    </div>
+</body>
