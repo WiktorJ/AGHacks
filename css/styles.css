@@ -92,7 +92,7 @@ h1 {
 }
 .key.black.pressed:after,
 .key.black:active:after {
-  background-color: grey;
+  background-color: #222;
 }
 #questions {
   padding: 20px;
@@ -135,9 +135,5 @@ input {
   background-color: red;
 }
 .pressedKey {
-  /*background red;*/
   background-color: green;
 }
-/*.pressedKeyB{*/
-  /*background-color: red;*/
-/*}*/

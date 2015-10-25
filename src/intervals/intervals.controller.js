@@ -141,7 +141,9 @@ app.controller('intervalsController', function ($scope, $timeout) {
     }
 
     $scope.keySequence = function(att){
-
+            //$scope.pressKey(0);
+            //$scope.pressKey(2);
+            //$scope.pressKey(16);
     }
 
 
