@@ -69,9 +69,9 @@ h1 {
 #rythmicGame .start.talk {
   margin-top: 5px;
 }
-canvas {
+#rythmicGame canvas {
   margin: 0 auto;
-  width: 520px;
+  width: 160px;
   background: #2a4051;
 }
 /** keys */
