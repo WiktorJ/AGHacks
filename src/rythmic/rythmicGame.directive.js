@@ -47,7 +47,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     this.draw = function () {
                         ctx.save();
                         ctx.fillStyle = this.fill;
-                        ctx.fillRect(this.x, this.y - this.pump, this.w, this.h+this.pump);
+                        ctx.fillRect(this.x, this.y - this.pump, this.w, this.h + this.pump);
                         ctx.restore();
                     }
                 },
@@ -69,7 +69,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                 },
                 playerIndex: 2,
                 player: {
-                    x: 2*40,
+                    x: 2 * 40,
                     left: false,
                     sprite: (function () {
                         var x = new Image();
@@ -104,6 +104,8 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                         APP.models.columns.push(new APP.models.column({x: i * 40, y: height - 30}));
                     }
 
+                    APP.points = 0;
+
 
                     window.addEventListener('keydown', function (evt) {
                         console.log(evt.which);
@@ -114,24 +116,34 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                         // k 75
 
                         var obj = {
-                            65: 0,
-                            90: 1,
-                            77: 2,
-                            75: 3
+                            90: 0,
+                            88: 1,
+                            78: 2,
+                            77: 3
                         };
                         Object.keys(obj).forEach(function (x) {
-                            if(evt.which == x){
+                            if (evt.which == x) {
                                 APP.models.columns.forEach(function (c, i) {
-                                    if(i == obj[x]){
-                                        c.fill = 'red';
-                                    }else{
+                                    if (i == obj[x]) {
+                                        c.fill = 'yellow';
+                                    } else {
                                         c.fill = 'white';
                                     }
-                                })
+                                });
+                                if (obj[x] == APP.models.playerIndex) {
+                                    APP.points += 100;
+                                    document.getElementById('points').textContent = APP.points;
+                                }
                             }
                         });
 
 
+                    });
+
+                    window.addEventListener('keyup', function (evt) {
+                        APP.models.columns.forEach(function (c, i) {
+                            c.fill = 'white';
+                        })
                     })
                 },
 
@@ -173,14 +185,13 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     APP.core.lastBeat = Date.now();
 
                     var x = Math.floor(Math.random() * 4);
-                    while(x == APP.models.playerIndex){
+                    while (x == APP.models.playerIndex) {
                         x = Math.floor(Math.random() * 4)
                     }
                     APP.models.playerIndex = x;
-                    APP.models.player.x = x*40;
+                    APP.models.player.x = x * 40;
                 }
             };
-
 
 
             scope.running = false;
@@ -192,6 +203,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                 song = songsInfo[song];
 
                 var audio = new Audio(song.src);
+                $rootScope.audio = audio;
 
                 bpm = song.bpm;
                 bps = bpm / 60;
