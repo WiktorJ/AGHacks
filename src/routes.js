@@ -18,5 +18,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/notation',
             templateUrl: 'src/notation/notation.html',
             controller: 'notationController'
+        })
+        .state('rythmics', {
+            url: '/rythmics',
+            templateUrl: 'src/rythmic/rythmic.html'
         });
+
+
 });
