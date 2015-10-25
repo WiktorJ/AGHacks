@@ -9,8 +9,8 @@ app.controller('intervalsController', function ($scope, $timeout) {
             soundfontUrl: "./soundfont/",
             instrument: "acoustic_grand_piano",
             onprogress: function (i) {
-                console.log(i);
             },
+
             onsuccess: function () {
                 var delay = 0; // play one note every quarter second
                 var note = 50; // the MIDI note
@@ -127,10 +127,11 @@ app.controller('intervalsController', function ($scope, $timeout) {
         if (currAns == $scope.intervalQuestion.answer) {
             $scope.result = "DOBRZE"
         } else {
-            $scope.result = "ŹLE"
+            $scope.result = "ŹLE\n Odpowiedź to: " + numberToIntervalName[Number(note2) - Number(note1)];
         }
-        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
-            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
+        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2%12] + "/" + octave2
+            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2%12] + "/" + octave2;
+
         $scope.pressKey(note1);
         $scope.pressKey(note2);
     };
@@ -157,7 +158,6 @@ app.controller('intervalsController', function ($scope, $timeout) {
     $scope.pressedArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     $scope.pressKey = function (i) {
-        console.log(i + 1);
         $scope.pressedArray[i] = 1;
         //$timeout(function(){$scope.pressedArray[i] =0;}, 2000);
     };
@@ -188,11 +188,11 @@ app.controller('intervalsController', function ($scope, $timeout) {
         var inter = randomInterval();
         playInterval(inter[0], inter[1], melodic, desc);
         $scope.tranningInterval = numberToIntervalName[Number(inter[1])];
-        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
-            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
+        $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2%12] + "/" + octave2
+            + "\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2%12] + "/" + octave2;
         $scope.pressKey(note1);
         $scope.pressKey(note2);
-    };
+       };
 
 
     function randomInterval() {
@@ -222,7 +222,8 @@ app.controller('intervalsController', function ($scope, $timeout) {
         }
 
         note1 = baseNote % 12;
-        note2 = (Number(baseNote) + Number(intervalRange)) % 12;
+        //note2 = (Number(baseNote) + Number(intervalRange)) % 12;
+        note2 = Number(note1) + Number(intervalRange);
         octave1 = Math.floor(baseNote / 12);
         octave2 = Math.floor((Number(baseNote) + Number(intervalRange)) / 12);
         //console.log(baseNote)

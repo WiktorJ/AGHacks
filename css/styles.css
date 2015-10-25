@@ -126,6 +126,13 @@ canvas {
 .key.black:active:after {
   background-color: greenyellow;
 }
+.notationIn {
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100px;
+  height: 25px;
+  font-size: 0.75em;
+}
 #questions {
   padding: 20px;
   text-align: center;
@@ -178,6 +185,12 @@ canvas {
 .pressedKey,
 .pressedKey:after {
   background-color: green!important;
+}
+.correct {
+  background-color: green;
+}
+.incorrect {
+  background-color: red;
 }
 button {
   background: #fff;
