@@ -3,7 +3,7 @@
  */
 
 
-app.controller('intervalsController', function ($scope) {
+app.controller('intervalsController', function ($scope, $timeout) {
     $scope.keySound = function(i) {
         MIDI.loadPlugin({
             soundfontUrl: "./soundfont/",
@@ -120,6 +120,29 @@ app.controller('intervalsController', function ($scope) {
     $scope.$on('$viewContentLoaded', function () {
         $scope.nextQuestion("wrong");
     });
+
+    $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+    //$scope.pressed = 0;
+    //$scope.hopeItWorks = function(){
+    //    console.log("Its something");
+    //    $scope.pressed =1;
+    //    $timeout(function(){ $scope.pressed = 0; }, 200);
+    //    $timeout(function(){ $scope.pressed = 1; }, 400);
+    //    $timeout(function(){ $scope.pressed = 0; }, 600);
+    //    $timeout(function(){ $scope.pressed = 1; }, 800);
+    //    $timeout(function(){ $scope.pressed = 0; }, 1000);
+    //};
+
+    $scope.pressKey = function(i){
+        console.log(i+1);
+        $scope.pressedArray[i] = 1;
+        $timeout(function(){$scope.pressedArray[i] =0;}, 200);
+    }
+
+    $scope.keySequence = function(att){
+
+    }
 
 
     function randomInterval() {
