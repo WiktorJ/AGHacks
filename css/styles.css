@@ -53,23 +53,26 @@ h1 {
   text-align: center;
   position: relative;
 }
-#rythmicGame #start {
+#rythmicGame .start {
   position: absolute;
   height: 50px;
-  width: 100px;
   top: 50%;
   left: 50%;
+  width: 280px;
   background: #000;
   color: #fff;
-  margin-left: -50px;
-  margin-top: -25px;
+  margin-left: -140px;
+  margin-top: -55px;
   font-size: 1.2em;
   font-family: monospace;
 }
+#rythmicGame .start.talk {
+  margin-top: 5px;
+}
 canvas {
-  border: 1px solid red;
   margin: 0 auto;
-  width: 480px;
+  width: 520px;
+  background: #2a4051;
 }
 /** keys */
 #piano .keys {

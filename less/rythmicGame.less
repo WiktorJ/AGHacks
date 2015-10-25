@@ -2,22 +2,26 @@
   text-align: center;
   position: relative;
   
-  #start {
+  .start {
     position: absolute;
     height: 50px;
-    width: 100px;
     top: 50%;
     left: 50%;
+    width: 280px;
     background: #000;
     color: #fff;
-    margin-left: -50px;
-    margin-top: -25px;
+    margin-left: -140px;
+    margin-top: -55px;
     font-size: 1.2em;
     font-family: monospace;
+
+    &.talk {
+      margin-top: 5px;
+    }
   }
 }
 canvas {
-  border: 1px solid red;
   margin: 0 auto;
-  width: 480px;
+  width: 520px;
+  background: rgb(42, 64, 81);
 }
