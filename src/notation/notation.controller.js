@@ -1,9 +1,10 @@
-app.controller('notationController', function ($scope,$timeout) {
+app.controller('notationController', function ($scope, $timeout) {
 
-    $scope.text="Sprawdź";
-    $scope.notesOptions = "options space=20\ntabstave\nnotation=true\ntablature=false\nnotes ";
-    $scope.numberOfSegments = 12;
+    $scope.text = "Sprawdź";
+    $scope.notesOptions = "options space=5\ntabstave\nnotation=true\ntablature=false\nnotes ";
+    $scope.numberOfSegments = 3;
 
+    var newNotes = false;
 
     $scope.getNumbersFromRange = function (min, max) {
         return parseInt(Math.random() * (max - min) + min, 10);
@@ -22,16 +23,17 @@ app.controller('notationController', function ($scope,$timeout) {
         for (var i = 0; i < nSegments; i++) {
 
 
-            var randomNumber = $scope.getNumbersFromRange(4, 7);
-            if(randomNumber>=6){
+            var randomNumber = $scope.getNumbersFromRange(4, 6);
+            if (randomNumber >= 6) {
                 outputSegment = outputSegment + $scope.getRandomNote();
                 var hashRandomNumber = $scope.getNumbersFromRange(0, 10);
                 outputSegment = outputSegment + '/' + randomNumber.toString();
             }
-            else{
-                var greaterRandomNumber = $scope.getNumbersFromRange(4,10);
-                var smallerNumber = $scope.getNumbersFromRange(1,greaterRandomNumber >7 ? 6 : greaterRandomNumber);
-                outputSegment = outputSegment + greaterRandomNumber + '/' + smallerNumber;
+            else {
+                var greaterRandomNumber = $scope.getNumbersFromRange(4, 10);
+                var smallerNumber = $scope.getNumbersFromRange(4, 6);
+                var modifier = ["", "n", "#", "@"];
+                outputSegment = outputSegment + $scope.getRandomNote() + modifier[$scope.getNumbersFromRange(0, modifier.length)] + '/' + smallerNumber;
             }
 
             outputSegment = outputSegment + ' ';
@@ -52,31 +54,44 @@ app.controller('notationController', function ($scope,$timeout) {
 
     $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
     $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
-    console.log($scope.randomNotes);
+    console.log("scoper: " + $scope.randomNotes);
 
 
     //1 -> true
     //0 -> not known
     //-1 -> false
     $scope.correctAnswer = 0;
-    $scope.check = function(){
-        console.log();
-        console.log(document.getElementById('notationInput').value);
-        console.log($scope.generatedNotes);
+    $scope.check = function () {
 
-        if(document.getElementById('notationInput').value == $scope.generatedNotes.trim()){
-            $scope.correctAnswer=1;
-            $scope.text="Ok";
-        }
-        else{
-            $scope.correctAnswer=-1;
-            $scope.text="Błąd";
-        }
+        if (newNotes) {
+            $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
+            $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
+            document.getElementById('userInput').value = "";
+            newNotes = false;
+        } else {
 
-        $timeout(function(){
-            $scope.correctAnswer=0;
-            $scope.text="Sprawdź";
-        },3000);
+
+            console.log(document.getElementById('userInput').value);
+            console.log($scope.generatedNotes);
+
+            if (document.getElementById('userInput').value.trim() == $scope.generatedNotes.trim()) {
+                $scope.correctAnswer = 1;
+                $scope.text = "Ok";
+                $timeout(function () {
+                    $scope.correctAnswer = 0;
+                    $scope.text = "Powtórz";
+                }, 1000);
+                newNotes = true;
+            }
+            else {
+                $scope.correctAnswer = -1;
+                $scope.text = "Błąd";
+                $timeout(function () {
+                    $scope.correctAnswer = 0;
+                    $scope.text = "Sprawdź";
+                }, 3000);
+            }
+        }
     }
 
 });
