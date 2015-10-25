@@ -19,8 +19,9 @@
 <body ng-app="app">
 
 
-<div id="container">
-    <h1 ui-sref="home"><img src="assets/2.png"></h1>
+<div id="container" ng-init="easter = 0;">
+    <h1 ui-sref="home" ng-click="easter = easter + 1"><img src="assets/2.png"></h1>
+    <h2 ng-if="easter > 5"><img src="assets/easter.png" alt=""/></h2>
     <ui-view></ui-view>
 </div>
 
