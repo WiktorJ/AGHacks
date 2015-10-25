@@ -143,8 +143,9 @@ h1 {
 .greenCheckButton:hover {
   background-color: green;
 }
-.pressedKey {
-  background-color: green;
+.pressedKey,
+.pressedKey:after {
+  background-color: green!important;
 }
 button {
   background: #fff;
