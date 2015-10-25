@@ -1,9 +1,10 @@
 <body>
 <h2>Interwały</h2>
 
-<div>
-    <div ng-if="state==0">
+<div style="position: relative">
+    <div id="intervalsOptionsMenu" ng-if="state==0">
         <form>
+            <h3>OPCJE</h3><br/>
             <label>Melodycznie:
                 <input type="checkbox" ng-model="melodicCheckbox" ng-init="melodicCheckbox=false">
             </label>
@@ -16,7 +17,7 @@
         <br/>
         <br/>
         <form>
-            <label>Jakie interwały?
+            <label><h3>TYPY INTERWAŁÓW</h3>
                 <br/>
                 <label>pryma
                     <input type="checkbox" ng-model="intervalc.unison" ng-init="intervalc.unison=true"
@@ -44,10 +45,12 @@
                 </label><br/>
             </label>
         </form>
+
+        <div ng-if="state==0" style="margin-top: 45px">
+            <button ng-click="goToTraning(melodicCheckbox, descendingCheckbox)">Trening</button>
+        </div>
     </div>
-    <div ng-if="state==0">
-        <button ng-click="goToTraning(melodicCheckbox, descendingCheckbox)">Trening</button>
-    </div>
+
 
     <div ng-if="state==1">
         <button ng-click="goToChallenge()">Wyzwanie</button>
