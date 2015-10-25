@@ -5,4 +5,4 @@ app.run(function ($rootScope) {
         function (event, toState, toParams, fromState, fromParams) {
             if($rootScope.audio) $rootScope.audio.pause();
         });
-})
+});
