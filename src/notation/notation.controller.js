@@ -66,15 +66,15 @@ app.controller('notationController', function ($scope, $timeout) {
         if (newNotes) {
             $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
             $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
-            document.getElementById('userInput').value = "";
+            document.getElementById('notationInput').value = "";
             newNotes = false;
         } else {
 
 
-            console.log(document.getElementById('userInput').value);
+            console.log(document.getElementById('notationInput').value);
             console.log($scope.generatedNotes);
 
-            if (document.getElementById('userInput').value.trim() == $scope.generatedNotes.trim()) {
+            if (document.getElementById('notationInput').value.trim() == $scope.generatedNotes.trim()) {
                 $scope.correctAnswer = 1;
                 $scope.text = "Ok";
                 $timeout(function () {
