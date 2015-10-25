@@ -67,6 +67,7 @@ app.controller('notationController', function ($scope, $timeout) {
             $scope.generatedNotes = $scope.createRandomSymphony($scope.numberOfSegments);
             $scope.randomNotes = $scope.notesOptions + $scope.generatedNotes + $scope.createAnnotations($scope.numberOfSegments);
             document.getElementById('notationInput').value = "";
+            $scope.text = "Sprawdź";
             newNotes = false;
         } else {
 

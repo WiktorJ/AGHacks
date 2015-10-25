@@ -91,6 +91,7 @@ app.controller('intervalsController', function ($scope, $timeout) {
             soundfontUrl: "./soundfont/",
             instrument: "acoustic_grand_piano",
             onsuccess: function () {
+                $scope.unPressKey();
                 var interval = randomInterval();
                 lastPlayedCombination = interval;
                 $scope.nextQuestion(numberToIntervalName[Number(interval[1])]);
@@ -124,6 +125,8 @@ app.controller('intervalsController', function ($scope, $timeout) {
         }
             $scope.randomNotes = $scope.notesOptions + "\nnotes " + numberToNote[note1] + "/" + octave1 + " " + numberToNote[note2] + "/" + octave2
                                     +"\ntext " + numberToNote[note1] + "/" + octave1 + "," + numberToNote[note2] + "/" + octave2;
+            $scope.pressKey(note1);
+            $scope.pressKey(note2);
     };
 
 
@@ -145,19 +148,22 @@ app.controller('intervalsController', function ($scope, $timeout) {
         $scope.nextQuestion("wrong");
     });
 
-    $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
     $scope.pressKey = function(i){
         console.log(i+1);
         $scope.pressedArray[i] = 1;
-        $timeout(function(){$scope.pressedArray[i] =0;}, 200);
-    }
+        //$timeout(function(){$scope.pressedArray[i] =0;}, 2000);
+    };
 
+    $scope.unPressKey = function(){
+        $scope.pressedArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    };
     $scope.keySequence = function(){
             //$scope.pressKey(0);
             //$scope.pressKey(2);
             //$scope.pressKey(16);
-    }
+    };
 
 
     function randomInterval() {
