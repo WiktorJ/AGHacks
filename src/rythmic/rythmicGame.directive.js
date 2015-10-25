@@ -5,7 +5,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
         templateUrl: 'src/rythmic/game.html',
         link: function (scope, iElem, iAttr) {
 
-            var width = 519, height = 300;
+            var width = 160, height = 300;
             var canvas = iElem[0].children[0];
             var ctx = canvas.getContext('2d');
 
@@ -29,7 +29,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                         ctx.save();
 
                         ctx.fillStyle = '#FFFFFF';
-                        for (var i = 0; i < 13; i++) {
+                        for (var i = 0; i < 4; i++) {
                             APP.models.columns[i].draw();
                         }
 
@@ -42,8 +42,13 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     this.y = x.y;
                     this.w = 39;
                     this.h = 30;
+                    this.pump = 0;
+                    this.fill = 'white';
                     this.draw = function () {
-                        ctx.fillRect(this.x, this.y, this.w, this.h);
+                        ctx.save();
+                        ctx.fillStyle = this.fill;
+                        ctx.fillRect(this.x, this.y - this.pump, this.w, this.h+this.pump);
+                        ctx.restore();
                     }
                 },
                 ceil: function () {
@@ -52,7 +57,7 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
 
                     ctx.fillStyle = '#FFFFFF';
                     ctx.moveTo(0, 0);
-                    for (var i = 0; i < 13; i++) {
+                    for (var i = 0; i < 4; i++) {
                         ctx.lineTo(20 + i * 40, 30);
                         ctx.lineTo(40 + i * 40, 0);
                     }
@@ -62,8 +67,9 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
 
                     ctx.restore();
                 },
-                playerIndex: 6,
+                playerIndex: 2,
                 player: {
+                    x: 2*40,
                     left: false,
                     sprite: (function () {
                         var x = new Image();
@@ -83,34 +89,48 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                         var index = APP.models.playerIndex;
                         var column = APP.models.columns[index];
 
-                        ctx.drawImage((this.left) ? this.sprite : this.spriteR, index * 40, height - column.h - 44);
+                        ctx.drawImage((this.left) ? this.sprite : this.spriteR, this.x, height - column.h - 44);
 
                         ctx.restore();
                     }
-                }
+                },
+                nextIndex: -1
             };
 
 
             APP.core = {
                 init: function () {
-                    for (var i = 0; i < 13; i++) {
+                    for (var i = 0; i < 4; i++) {
                         APP.models.columns.push(new APP.models.column({x: i * 40, y: height - 30}));
                     }
 
 
                     window.addEventListener('keydown', function (evt) {
-                        if (evt.which == 37) {
-                            APP.models.playerIndex--;
-                            if (APP.models.playerIndex < 0) {
-                                APP.models.playerIndex = 0;
+                        console.log(evt.which);
+                        // a 65
+                        // z 90
+
+                        // m 77
+                        // k 75
+
+                        var obj = {
+                            65: 0,
+                            90: 1,
+                            77: 2,
+                            75: 3
+                        };
+                        Object.keys(obj).forEach(function (x) {
+                            if(evt.which == x){
+                                APP.models.columns.forEach(function (c, i) {
+                                    if(i == obj[x]){
+                                        c.fill = 'red';
+                                    }else{
+                                        c.fill = 'white';
+                                    }
+                                })
                             }
-                        }
-                        if (evt.which == 39) {
-                            APP.models.playerIndex++;
-                            if (APP.models.playerIndex > 12) {
-                                APP.models.playerIndex = 12;
-                            }
-                        }
+                        });
+
 
                     })
                 },
@@ -133,17 +153,34 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
                     APP.models.floor.draw();
                     APP.models.ceil();
                     APP.models.player.draw();
+
+                    ctx.save();
+                    ctx.fillStyle = 'rgb(255,0,0)';
+                    ctx.fillRect(APP.models.nextIndex * 40, height - 30, 39, 30);
+                    ctx.restore();
                     // Render updates to browser (draw to canvas, update css, etc.)
                 },
 
                 update: function () {
+
+
                     // Update values
                     // var distance = 100 * APP._delta;
                     // APP.thing.x += 100 * APP._delta;
+                },
+
+                updateBeat: function () {
+                    APP.core.lastBeat = Date.now();
+
+                    var x = Math.floor(Math.random() * 4);
+                    while(x == APP.models.playerIndex){
+                        x = Math.floor(Math.random() * 4)
+                    }
+                    APP.models.playerIndex = x;
+                    APP.models.player.x = x*40;
                 }
             };
 
-            APP.play();
 
 
             scope.running = false;
@@ -163,11 +200,11 @@ app.directive('rythmicGame', function ($rootScope, songsInfo) {
 
                 audio.play();
 
+                APP.play();
+
 
                 setTimeout(function () {
-                    setInterval(function () {
-                        console.log('beat!')
-                    }, bitTime * 1000);
+                    setInterval(APP.core.updateBeat, bitTime * 1000);
                 }, song.latency * bitTime * 1000); // for talkDirty 3*bitTime
 
             }

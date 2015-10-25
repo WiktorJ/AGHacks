@@ -72,15 +72,15 @@ h1 {
 #rythmicGame .start.talk {
   margin-top: 5px;
 }
-canvas {
+#rythmicGame canvas {
   margin: 0 auto;
-  width: 520px;
+  width: 160px;
   background: #2a4051;
 }
 /** keys */
 #piano .keys {
   /*width: 1144px;*/
-  width: 780px;
+  width: 98%;
   padding: 2px 0 0 2px;
   overflow: hidden;
   background: #000;
@@ -90,8 +90,8 @@ canvas {
 .key {
   float: left;
   position: relative;
-  width: 50px;
-  height: 180px;
+  width: 6.8%;
+  height: 300px;
   margin: 0 2px 2px 0;
   background: #fff;
   border-radius: 0 0 4px 4px;
@@ -111,19 +111,19 @@ canvas {
   content: "";
   position: absolute;
   top: -2px;
-  left: -16px;
+  left: -25px;
   display: block;
-  width: 32px;
-  height: 117px;
+  width: 50px;
+  height: 200px;
   background: #000;
   border-radius: 0 0 4px 4px;
   box-shadow: 1px 1px 0 #555, 2px 2px 0 #555;
 }
 .key.black1:after {
-  left: -20px;
+  left: -25px;
 }
 .key.black3:after {
-  left: -16px;
+  left: -25px;
 }
 .key.black.pressed:after,
 .key.black:active:after {
@@ -188,6 +188,7 @@ canvas {
 .pressedKey,
 .pressedKey:after {
   background-color: green!important;
+  border: solid 2px white;
 }
 .correct {
   background-color: green;
@@ -203,6 +204,17 @@ button {
   height: 50px;
   display: inline-block;
   margin: 0 2% 2% 2%;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+.button1 {
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 150px;
+  font-size: 1.5em;
+  height: 50px;
+  display: inline-block;
   text-align: center;
   cursor: pointer;
   outline: none;
